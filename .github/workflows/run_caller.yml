@@ -1,7 +1,4 @@
-name: Call Run Collection
-jobs:
-  build:
-    runs-on: ubuntu-latest
+name: Call Collection Run
 jobs:
   call-workflow:
     uses: digital-land/collection-template/.github/workflows/callable_run.yml@vmain
