@@ -4,6 +4,8 @@ on:
     secrets:
       DLB_BOT_EMAIL: 
         required: true
+      DLB_BOT_TOKEN: 
+        required: true
 env:
   DLB_BOT_EMAIL: ${{ secrets.DLB_BOT_EMAIL }}
   DLB_BOT_TOKEN: ${{ secrets.DLB_BOT_TOKEN }}
