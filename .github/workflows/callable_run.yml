@@ -1,6 +1,9 @@
 name: Run collection
 on:
   workflow_call:
+    secrets:
+      DLB_BOT_EMAIL: 
+        required: true
 env:
   DLB_BOT_EMAIL: ${{ secrets.DLB_BOT_EMAIL }}
   DLB_BOT_TOKEN: ${{ secrets.DLB_BOT_TOKEN }}
