@@ -1,9 +1,6 @@
 name: Run collection
 on:
   workflow_call:
-    with:
-      CALLER_GITHUB_REF:
-        required: true
     secrets:
       DLB_BOT_EMAIL: 
         required: true
