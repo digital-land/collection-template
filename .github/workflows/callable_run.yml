@@ -6,6 +6,12 @@ on:
         required: true
       DLB_BOT_TOKEN: 
         required: true
+      DLB_BOT_USERNAME: 
+        required: true
+      AWS_S3_ACCESS_KEY_ID:
+        required: true
+      AWS_S3_SECRET_ACCESS_KEY:
+        required: true
 env:
   DLB_BOT_EMAIL: ${{ secrets.DLB_BOT_EMAIL }}
   DLB_BOT_TOKEN: ${{ secrets.DLB_BOT_TOKEN }}
