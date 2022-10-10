@@ -16,7 +16,6 @@ env:
   DLB_BOT_EMAIL: ${{ secrets.DLB_BOT_EMAIL }}
   DLB_BOT_TOKEN: ${{ secrets.DLB_BOT_TOKEN }}
   DLB_BOT_USERNAME: ${{ secrets.DLB_BOT_USERNAME }}
-  CALLER_GITHUB_REF: ${{ github.ref }}
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -49,7 +48,7 @@ jobs:
         git config user.email "${DLB_BOT_EMAIL}"
         git config user.name "${DLB_BOT_USERNAME}"
         git remote set-url origin https://${DLB_BOT_USERNAME}:${DLB_BOT_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
-        git checkout ${CALLER_GITHUB_REF##*/}
+        git checkout ${GITHUB_REF##*/}
 
     - name: Update makerules
       run: make makerules
