@@ -6,7 +6,5 @@ on:
 jobs:
   call-workflow:
     uses: digital-land/collection-template/.github/workflows/callable_run.yml@main
-    with:
-      CALLER_GITHUB_REF: ${{ GITHUB_REF }}
     secrets: inherit
 

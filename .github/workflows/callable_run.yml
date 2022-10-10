@@ -19,7 +19,7 @@ env:
   DLB_BOT_EMAIL: ${{ secrets.DLB_BOT_EMAIL }}
   DLB_BOT_TOKEN: ${{ secrets.DLB_BOT_TOKEN }}
   DLB_BOT_USERNAME: ${{ secrets.DLB_BOT_USERNAME }}
-  CALLER_GITHUB_REF: ${{ inputs.CALLER_GITHUB_REF }}
+  CALLER_GITHUB_REF: ${{ github.ref }}
 jobs:
   build:
     runs-on: ubuntu-latest
