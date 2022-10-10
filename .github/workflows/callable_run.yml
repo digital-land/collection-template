@@ -1,10 +1,6 @@
 name: Run collection
 on:
   workflow_call:
-    inputs:
-      config-path:
-        required: true
-        type: string
     secrets:
       DLB_BOT_EMAIL:
         required: true
