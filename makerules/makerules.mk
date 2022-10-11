@@ -47,7 +47,7 @@ BRANCH := $(shell git rev-parse --abbrev-ref HEAD)
 
 UNAME := $(shell uname)
 
-# detect location of spatialite library
+# detect location of spatialite library, for linux add to path so python can pick up thhe files
 ifndef SPATIALITE_EXTENSION
 ifeq ($(UNAME), Linux)
 SPATIALITE_EXTENSION="/usr/lib/x86_64-linux-gnu/mod_spatialite.so"
@@ -75,6 +75,7 @@ endif
 ifneq (,$(wildcard setup.py))
 	pip install -e .$(PIP_INSTALL_PACKAGE)
 endif
+	sqlite3 --version
 
 submodules::
 	git submodule update --init --recursive --remote
@@ -99,16 +100,21 @@ ifeq (,$(wildcard ./makerules/specification.mk))
 # update local copies of specification files
 specification::
 	@mkdir -p specification/
+	curl -qfsL '$(SOURCE_URL)/specification/main/specification/attribution.csv' > specification/attribution.csv
+	curl -qfsL '$(SOURCE_URL)/specification/main/specification/licence.csv' > specification/licence.csv
+	curl -qfsL '$(SOURCE_URL)/specification/main/specification/typology.csv' > specification/typology.csv
+	curl -qfsL '$(SOURCE_URL)/specification/main/specification/theme.csv' > specification/theme.csv
 	curl -qfsL '$(SOURCE_URL)/specification/main/specification/collection.csv' > specification/collection.csv
 	curl -qfsL '$(SOURCE_URL)/specification/main/specification/dataset.csv' > specification/dataset.csv
+	curl -qfsL '$(SOURCE_URL)/specification/main/specification/dataset-field.csv' > specification/dataset-field.csv
+	curl -qfsL '$(SOURCE_URL)/specification/main/specification/field.csv' > specification/field.csv
+	curl -qfsL '$(SOURCE_URL)/specification/main/specification/datatype.csv' > specification/datatype.csv
+	curl -qfsL '$(SOURCE_URL)/specification/main/specification/prefix.csv' > specification/prefix.csv
+	# deprecated ..
+	curl -qfsL '$(SOURCE_URL)/specification/main/specification/pipeline.csv' > specification/pipeline.csv
 	curl -qfsL '$(SOURCE_URL)/specification/main/specification/dataset-schema.csv' > specification/dataset-schema.csv
 	curl -qfsL '$(SOURCE_URL)/specification/main/specification/schema.csv' > specification/schema.csv
 	curl -qfsL '$(SOURCE_URL)/specification/main/specification/schema-field.csv' > specification/schema-field.csv
-	curl -qfsL '$(SOURCE_URL)/specification/main/specification/field.csv' > specification/field.csv
-	curl -qfsL '$(SOURCE_URL)/specification/main/specification/datatype.csv' > specification/datatype.csv
-	curl -qfsL '$(SOURCE_URL)/specification/main/specification/typology.csv' > specification/typology.csv
-	curl -qfsL '$(SOURCE_URL)/specification/main/specification/pipeline.csv' > specification/pipeline.csv
-	curl -qfsL '$(SOURCE_URL)/specification/main/specification/theme.csv' > specification/theme.csv
 
 init::	specification
 endif

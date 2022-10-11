@@ -45,8 +45,8 @@ ifeq ($(DATASET_DIR),)
 DATASET_DIR=dataset/
 endif
 
-ifeq ($(HOISTED_DIR),)
-HOISTED_DIR=hoisted/
+ifeq ($(FLATTENED_DIR),)
+FLATTENED_DIR=flattened/
 endif
 
 ifeq ($(DATASET_DIRS),)
@@ -56,7 +56,11 @@ DATASET_DIRS=\
 	$(DATASET_RESOURCE_DIR)\
 	$(ISSUE_DIR)\
 	$(DATASET_DIR)\
-	$(HOISTED_DIR)
+	$(FLATTENED_DIR)
+endif
+
+ifeq ($(EXPECTATION_DIR),)
+EXPECTATION_DIR = expectations/
 endif
 
 define run-pipeline
@@ -69,10 +73,14 @@ define build-dataset =
 	time digital-land --dataset $(notdir $(basename $@)) dataset-create --output-path $(basename $@).sqlite3 $(^)
 	time datasette inspect $(basename $@).sqlite3 --inspect-file=$(basename $@).sqlite3.json
 	time digital-land --dataset $(notdir $(basename $@)) dataset-entries $(basename $@).sqlite3 $@
-	mkdir -p $(HOISTED_DIR)
-	time digital-land --dataset $(notdir $(basename $@)) dataset-entries-hoisted $@ $(HOISTED_DIR)$(notdir $(basename $@))-hoisted.csv
+	mkdir -p $(FLATTENED_DIR)
+	time digital-land --dataset $(notdir $(basename $@)) dataset-entries-flattened $@ $(FLATTENED_DIR)
 	md5sum $@ $(basename $@).sqlite3
 	csvstack $(wildcard $(ISSUE_DIR)/$(notdir $(basename $@))/*.csv) > $(basename $@)-issue.csv
+	mkdir -p $(EXPECTATION_DIR)yamls/data_acceptance/
+	mkdir -p $(EXPECTATION_DIR)results/data_acceptance/$(notdir $(basename $@))
+	-curl -qsfL 'https://raw.githubusercontent.com/digital-land/expectations-config/main/dataset_acceptance/$(notdir $(basename $@)).yaml' > $(EXPECTATION_DIR)yamls/data_acceptance/$(notdir $(basename $@)).yaml
+	time digital-land expectations --results-path "$(EXPECTATION_DIR)results/data_acceptance/$(notdir $(basename $@))" --sqlite-dataset-path "$(basename $@).sqlite3" --data-quality-yaml "$(EXPECTATION_DIR)yamls/data_acceptance/$(notdir $(basename $@)).yaml"
 endef
 
 collection::
@@ -91,11 +99,14 @@ init::
 	pip install csvkit
 ifndef GDAL
 ifeq ($(UNAME),Darwin)
-$(error GDAL tools not found in PATH)
+	$(error GDAL tools not found in PATH)
 endif
 	sudo apt-get install gdal-bin
 endif
 	pyproj sync --file uk_os_OSTN15_NTv2_OSGBtoETRS.tif -v
+ifeq ($(UNAME),Linux)
+	sudo apt-get install libsqlite3-mod-spatialite
+endif
 
 
 clobber::
@@ -120,8 +131,12 @@ save-transformed::
 
 save-dataset::
 	aws s3 sync $(DATASET_DIR) s3://$(COLLECTION_DATASET_BUCKET_NAME)/$(REPOSITORY)/$(DATASET_DIR) --no-progress
-	@mkdir -p $(HOISTED_DIR)
-	aws s3 sync $(HOISTED_DIR) s3://$(HOISTED_COLLECTION_DATASET_BUCKET_NAME)/ --no-progress
+	@mkdir -p $(FLATTENED_DIR)
+	aws s3 sync $(FLATTENED_DIR) s3://$(HOISTED_COLLECTION_DATASET_BUCKET_NAME)/data/ --no-progress
+
+save-expectations::
+	@mkdir -p $(EXPECTATION_DIR)results/
+	aws s3 sync $(EXPECTATION_DIR)results/ s3://$(COLLECTION_DATASET_BUCKET_NAME)/$(REPOSITORY)/$(EXPECTATION_DIR)
 
 # convert an individual resource
 # .. this assumes conversion is the same for every dataset, but it may not be soon
