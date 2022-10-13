@@ -148,7 +148,7 @@ jobs:
       if: always()
       run: make save-expectations
 
-    -name: Configure Production AWS Credentials
+    - name: Configure Production AWS Credentials
       if: always()
       uses: aws-actions/configure-aws-credentials@v1
       with:
