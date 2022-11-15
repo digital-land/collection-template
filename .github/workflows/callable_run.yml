@@ -126,7 +126,7 @@ jobs:
     
     - name: Push collection database to Prod S3
       env:
-        COLLECTION_DATASET_BUCKET_NAME: ${{secrets.PROD_DATA_S3_BUCKET}}
+        COLLECTION_DATASET_BUCKET_NAME: ${{secrets.PRODUCTION_DATA_S3_BUCKET}}
       run: make save-collection
 
     - name: transform collected files
