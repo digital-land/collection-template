@@ -163,7 +163,7 @@ jobs:
 
     - name: Save transformed files to Prod S3
       env:
-        COLLECTION_DATASET_BUCKET_NAME: ${{secrets.PROD_DATA_S3_BUCKET}}
+        COLLECTION_DATASET_BUCKET_NAME: ${{secrets.PRODUCTION_DATA_S3_BUCKET}}
       run: make save-transformed
 
     - name: Build datasets from the transformed files
@@ -214,14 +214,14 @@ jobs:
     
     - name: Save datasets to Prod S3
       env:
-        COLLECTION_DATASET_BUCKET_NAME: ${{secrets.PROD_DATA_S3_BUCKET}}
-        HOISTED_COLLECTION_DATASET_BUCKET_NAME: ${{secrets.PROD_DATA_S3_BUCKET}}
+        COLLECTION_DATASET_BUCKET_NAME: ${{secrets.PRODUCTION_DATA_S3_BUCKET}}
+        HOISTED_COLLECTION_DATASET_BUCKET_NAME: ${{secrets.PRODUCTION_DATA_S3_BUCKET}}
       run: make save-dataset
     
     - name: Save expectations to S3
       if: always()
       env:
-        COLLECTION_DATASET_BUCKET_NAME: ${{secrets.PROD_DATA_S3_BUCKET}}
+        COLLECTION_DATASET_BUCKET_NAME: ${{secrets.PRODUCTION_DATA_S3_BUCKET}}
       run: make save-expectations
 
 
