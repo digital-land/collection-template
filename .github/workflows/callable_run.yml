@@ -130,7 +130,7 @@ jobs:
       run: make save-collection
 
     - name: transform collected files
-      run: make transformed
+      run: make transformed -j 2
 
     - name: Configure Dev AWS Credentials
       uses: aws-actions/configure-aws-credentials@v1
