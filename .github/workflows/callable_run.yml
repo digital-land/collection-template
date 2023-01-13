@@ -58,28 +58,6 @@ jobs:
     - name: Commit collection logs
       run: make commit-collection
 
-    - name: Configure Dev AWS Credentials
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{secrets.AWS_S3_ACCESS_KEY_ID}}
-        aws-secret-access-key: ${{secrets.AWS_S3_SECRET_ACCESS_KEY}}
-        aws-region: eu-west-2
-
-    - name: Save collected resources to Dev S3
-      run: make save-resources
-
-    - name: Configure Temporary Production AWS Credentials
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{secrets.TEMPORARY_PROD_AWS_ACCESS_KEY_ID}}
-        aws-secret-access-key: ${{secrets.TEMPORARY_PROD_AWS_ACCESS_SECRET}}
-        aws-region: eu-west-2
-
-    - name: Save collected resources to Temporary Prod S3
-      env: 
-        COLLECTION_DATASET_BUCKET_NAME: ${{secrets.TEMPORARY_DATA_S3_BUCKET}}
-      run: make save-resources
-
     - name: Configure Production AWS Credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
@@ -95,28 +73,6 @@ jobs:
     - name: Build the collection database
       run: make collection
 
-    - name: Configure Dev AWS Credentials
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{secrets.AWS_S3_ACCESS_KEY_ID}}
-        aws-secret-access-key: ${{secrets.AWS_S3_SECRET_ACCESS_KEY}}
-        aws-region: eu-west-2
-
-    - name: Push collection database to Dev S3
-      run: make save-collection
-
-    - name: Configure Temporary Production AWS Credentials
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{secrets.TEMPORARY_PROD_AWS_ACCESS_KEY_ID}}
-        aws-secret-access-key: ${{secrets.TEMPORARY_PROD_AWS_ACCESS_SECRET}}
-        aws-region: eu-west-2
-    
-    - name: Push collection database to Temporary Prod S3
-      env:
-        COLLECTION_DATASET_BUCKET_NAME: ${{secrets.TEMPORARY_DATA_S3_BUCKET}}
-      run: make save-collection
-
     - name: Configure Production AWS Credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
@@ -131,28 +87,6 @@ jobs:
 
     - name: transform collected files
       run: make transformed -j 2
-
-    - name: Configure Dev AWS Credentials
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{secrets.AWS_S3_ACCESS_KEY_ID}}
-        aws-secret-access-key: ${{secrets.AWS_S3_SECRET_ACCESS_KEY}}
-        aws-region: eu-west-2
-
-    - name: Save transformed files to Dev S3
-      run: make save-transformed
-    
-    - name: Configure Temporary Production AWS Credentials
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{secrets.TEMPORARY_PROD_AWS_ACCESS_KEY_ID}}
-        aws-secret-access-key: ${{secrets.TEMPORARY_PROD_AWS_ACCESS_SECRET}}
-        aws-region: eu-west-2
-
-    - name: Save transformed files to Temporary Prod S3
-      env:
-        COLLECTION_DATASET_BUCKET_NAME: ${{secrets.TEMPORARY_DATA_S3_BUCKET}}
-      run: make save-transformed
     
     - name: Configure Production AWS Credentials
       uses: aws-actions/configure-aws-credentials@v1
@@ -168,41 +102,6 @@ jobs:
 
     - name: Build datasets from the transformed files
       run: make dataset
-
-    - name: Configure Dev AWS Credentials
-      if: always()
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{secrets.AWS_S3_ACCESS_KEY_ID}}
-        aws-secret-access-key: ${{secrets.AWS_S3_SECRET_ACCESS_KEY}}
-        aws-region: eu-west-2
-
-    - name: Save datasets to Dev S3
-      run: make save-dataset
-    
-    - name: Save expectations to Dev S3
-      if: always()
-      run: make save-expectations
-
-    - name: Configure Temporary Production AWS Credentials
-      if: always()
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{secrets.TEMPORARY_PROD_AWS_ACCESS_KEY_ID}}
-        aws-secret-access-key: ${{secrets.TEMPORARY_PROD_AWS_ACCESS_SECRET}}
-        aws-region: eu-west-2
-    
-    - name: Save datasets to Temporary Prod S3
-      env:
-        COLLECTION_DATASET_BUCKET_NAME: ${{secrets.TEMPORARY_DATA_S3_BUCKET}}
-        HOISTED_COLLECTION_DATASET_BUCKET_NAME: ${{secrets.TEMPORARY_DATA_S3_BUCKET}}
-      run: make save-dataset
-    
-    - name: Save expectations to Temporary Prod S3
-      if: always()
-      env:
-        COLLECTION_DATASET_BUCKET_NAME: ${{secrets.TEMPORARY_DATA_S3_BUCKET}}
-      run: make save-expectations
     
     - name: Configure Production AWS Credentials
       if: always()
@@ -218,12 +117,11 @@ jobs:
         HOISTED_COLLECTION_DATASET_BUCKET_NAME: ${{secrets.PRODUCTION_DATA_S3_BUCKET}}
       run: make save-dataset
     
-    - name: Save expectations to S3
+    - name: Save expectations to Prod S3
       if: always()
       env:
         COLLECTION_DATASET_BUCKET_NAME: ${{secrets.PRODUCTION_DATA_S3_BUCKET}}
       run: make save-expectations
-
 
   check-pipeline-errors:
     runs-on: ubuntu-latest
