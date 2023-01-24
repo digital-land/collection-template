@@ -58,6 +58,18 @@ jobs:
     - name: Commit collection logs
       run: make commit-collection
 
+    - name: Configure Development AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{secrets.DEVELOPMENT_AWS_ACCESS_KEY_ID}}
+        aws-secret-access-key: ${{secrets.DEVELOPMENT_AWS_ACCESS_SECRET}}
+        aws-region: eu-west-2
+
+    - name: Save collected resources to Development S3
+      env: 
+        COLLECTION_DATASET_BUCKET_NAME: ${{secrets.DEVELOPMENT_DATA_S3_BUCKET}}
+      run: make save-resources
+
     - name: Configure Production AWS Credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
@@ -72,6 +84,18 @@ jobs:
 
     - name: Build the collection database
       run: make collection
+
+    - name: Configure Development AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{secrets.DEVELOPMENT_AWS_ACCESS_KEY_ID}}
+        aws-secret-access-key: ${{secrets.DEVELOPMENT_AWS_ACCESS_SECRET}}
+        aws-region: eu-west-2
+    
+    - name: Push collection database to Development S3
+      env:
+        COLLECTION_DATASET_BUCKET_NAME: ${{secrets.DEVELOPMENT_DATA_S3_BUCKET}}
+      run: make save-collection
 
     - name: Configure Production AWS Credentials
       uses: aws-actions/configure-aws-credentials@v1
@@ -88,6 +112,18 @@ jobs:
     - name: transform collected files
       run: make transformed -j 2
     
+    - name: Configure Development AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{secrets.DEVELOPMENT_AWS_ACCESS_KEY_ID}}
+        aws-secret-access-key: ${{secrets.DEVELOPMENT_AWS_ACCESS_SECRET}}
+        aws-region: eu-west-2
+
+    - name: Save transformed files to Development S3
+      env:
+        COLLECTION_DATASET_BUCKET_NAME: ${{secrets.DEVELOPMENT_DATA_S3_BUCKET}}
+      run: make save-transformed
+
     - name: Configure Production AWS Credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
@@ -102,6 +138,26 @@ jobs:
 
     - name: Build datasets from the transformed files
       run: make dataset
+
+    - name: Configure Development AWS Credentials
+      if: always()
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{secrets.DEVELOPMENT_AWS_ACCESS_KEY_ID}}
+        aws-secret-access-key: ${{secrets.DEVELOPMENT_AWS_ACCESS_SECRET}}
+        aws-region: eu-west-2
+    
+    - name: Save datasets to Development S3
+      env:
+        COLLECTION_DATASET_BUCKET_NAME: ${{secrets.DEVELOPMENT_DATA_S3_BUCKET}}
+        HOISTED_COLLECTION_DATASET_BUCKET_NAME: ${{secrets.DEVELOPMENT_DATA_S3_BUCKET}}
+      run: make save-dataset
+
+    - name: Save expectations to Development S3
+      if: always()
+      env:
+        COLLECTION_DATASET_BUCKET_NAME: ${{secrets.DEVELOPMENT_DATA_S3_BUCKET}}
+      run: make save-expectations
     
     - name: Configure Production AWS Credentials
       if: always()
