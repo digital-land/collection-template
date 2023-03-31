@@ -22,7 +22,7 @@ jobs:
     steps:
     
     - name: Print number of CPU cores
-      run: echo "Number of CPU cores: $(nproc)"
+      run: echo "Number of CPU cores:$(sysctl -n hw.ncpu)"
       
     - name: Free up disk space
       run: |
