@@ -20,7 +20,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-
+    
+    - name: Print number of CPU cores
+      run: echo "Number of CPU cores: $(nproc)"
+      
     - name: Free up disk space
       run: |
         df -h
