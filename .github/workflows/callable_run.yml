@@ -70,29 +70,29 @@ jobs:
         COLLECTION_DATASET_BUCKET_NAME: ${{secrets.DEVELOPMENT_DATA_S3_BUCKET}}
       run: make save-resources
 
-    - name: Configure Staging AWS Credentials
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{secrets.STAGING_AWS_ACCESS_KEY_ID}}
-        aws-secret-access-key: ${{secrets.STAGING_AWS_ACCESS_SECRET}}
-        aws-region: eu-west-2
+    # - name: Configure Staging AWS Credentials
+    #   uses: aws-actions/configure-aws-credentials@v1
+    #   with:
+    #     aws-access-key-id: ${{secrets.STAGING_AWS_ACCESS_KEY_ID}}
+    #     aws-secret-access-key: ${{secrets.STAGING_AWS_ACCESS_SECRET}}
+    #     aws-region: eu-west-2
 
-    - name: Save collected resources to Staging S3
-      env: 
-        COLLECTION_DATASET_BUCKET_NAME: ${{secrets.STAGING_DATA_S3_BUCKET}}
-      run: make save-resources
+    # - name: Save collected resources to Staging S3
+    #   env: 
+    #     COLLECTION_DATASET_BUCKET_NAME: ${{secrets.STAGING_DATA_S3_BUCKET}}
+    #   run: make save-resources
 
-    - name: Configure Production AWS Credentials
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{secrets.PROD_AWS_ACCESS_KEY_ID}}
-        aws-secret-access-key: ${{secrets.PROD_AWS_ACCESS_SECRET}}
-        aws-region: eu-west-2
+    # - name: Configure Production AWS Credentials
+    #   uses: aws-actions/configure-aws-credentials@v1
+    #   with:
+    #     aws-access-key-id: ${{secrets.PROD_AWS_ACCESS_KEY_ID}}
+    #     aws-secret-access-key: ${{secrets.PROD_AWS_ACCESS_SECRET}}
+    #     aws-region: eu-west-2
 
-    - name: Save collected resources to Prod S3
-      env: 
-        COLLECTION_DATASET_BUCKET_NAME: ${{secrets.PRODUCTION_DATA_S3_BUCKET}}
-      run: make save-resources
+    # - name: Save collected resources to Prod S3
+    #   env: 
+    #     COLLECTION_DATASET_BUCKET_NAME: ${{secrets.PRODUCTION_DATA_S3_BUCKET}}
+    #   run: make save-resources
 
     - name: Build the collection database
       run: make collection
@@ -109,29 +109,29 @@ jobs:
         COLLECTION_DATASET_BUCKET_NAME: ${{secrets.DEVELOPMENT_DATA_S3_BUCKET}}
       run: make save-collection
 
-    - name: Configure Staging AWS Credentials
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{secrets.STAGING_AWS_ACCESS_KEY_ID}}
-        aws-secret-access-key: ${{secrets.STAGING_AWS_ACCESS_SECRET}}
-        aws-region: eu-west-2
+    # - name: Configure Staging AWS Credentials
+    #   uses: aws-actions/configure-aws-credentials@v1
+    #   with:
+    #     aws-access-key-id: ${{secrets.STAGING_AWS_ACCESS_KEY_ID}}
+    #     aws-secret-access-key: ${{secrets.STAGING_AWS_ACCESS_SECRET}}
+    #     aws-region: eu-west-2
     
-    - name: Push collection database to Staging S3
-      env:
-        COLLECTION_DATASET_BUCKET_NAME: ${{secrets.STAGING_DATA_S3_BUCKET}}
-      run: make save-collection
+    # - name: Push collection database to Staging S3
+    #   env:
+    #     COLLECTION_DATASET_BUCKET_NAME: ${{secrets.STAGING_DATA_S3_BUCKET}}
+    #   run: make save-collection
 
-    - name: Configure Production AWS Credentials
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{secrets.PROD_AWS_ACCESS_KEY_ID}}
-        aws-secret-access-key: ${{secrets.PROD_AWS_ACCESS_SECRET}}
-        aws-region: eu-west-2
+    # - name: Configure Production AWS Credentials
+    #   uses: aws-actions/configure-aws-credentials@v1
+    #   with:
+    #     aws-access-key-id: ${{secrets.PROD_AWS_ACCESS_KEY_ID}}
+    #     aws-secret-access-key: ${{secrets.PROD_AWS_ACCESS_SECRET}}
+    #     aws-region: eu-west-2
     
-    - name: Push collection database to Prod S3
-      env:
-        COLLECTION_DATASET_BUCKET_NAME: ${{secrets.PRODUCTION_DATA_S3_BUCKET}}
-      run: make save-collection
+    # - name: Push collection database to Prod S3
+    #   env:
+    #     COLLECTION_DATASET_BUCKET_NAME: ${{secrets.PRODUCTION_DATA_S3_BUCKET}}
+    #   run: make save-collection
 
     - name: transform collected files
       run: make transformed -j 2
@@ -148,29 +148,29 @@ jobs:
         COLLECTION_DATASET_BUCKET_NAME: ${{secrets.DEVELOPMENT_DATA_S3_BUCKET}}
       run: make save-transformed
 
-    - name: Configure Staging AWS Credentials
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{secrets.STAGING_AWS_ACCESS_KEY_ID}}
-        aws-secret-access-key: ${{secrets.STAGING_AWS_ACCESS_SECRET}}
-        aws-region: eu-west-2
+    # - name: Configure Staging AWS Credentials
+    #   uses: aws-actions/configure-aws-credentials@v1
+    #   with:
+    #     aws-access-key-id: ${{secrets.STAGING_AWS_ACCESS_KEY_ID}}
+    #     aws-secret-access-key: ${{secrets.STAGING_AWS_ACCESS_SECRET}}
+    #     aws-region: eu-west-2
 
-    - name: Save transformed files to Staging S3
-      env:
-        COLLECTION_DATASET_BUCKET_NAME: ${{secrets.STAGING_DATA_S3_BUCKET}}
-      run: make save-transformed
+    # - name: Save transformed files to Staging S3
+    #   env:
+    #     COLLECTION_DATASET_BUCKET_NAME: ${{secrets.STAGING_DATA_S3_BUCKET}}
+    #   run: make save-transformed
 
-    - name: Configure Production AWS Credentials
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{secrets.PROD_AWS_ACCESS_KEY_ID}}
-        aws-secret-access-key: ${{secrets.PROD_AWS_ACCESS_SECRET}}
-        aws-region: eu-west-2
+    # - name: Configure Production AWS Credentials
+    #   uses: aws-actions/configure-aws-credentials@v1
+    #   with:
+    #     aws-access-key-id: ${{secrets.PROD_AWS_ACCESS_KEY_ID}}
+    #     aws-secret-access-key: ${{secrets.PROD_AWS_ACCESS_SECRET}}
+    #     aws-region: eu-west-2
 
-    - name: Save transformed files to Prod S3
-      env:
-        COLLECTION_DATASET_BUCKET_NAME: ${{secrets.PRODUCTION_DATA_S3_BUCKET}}
-      run: make save-transformed
+    # - name: Save transformed files to Prod S3
+    #   env:
+    #     COLLECTION_DATASET_BUCKET_NAME: ${{secrets.PRODUCTION_DATA_S3_BUCKET}}
+    #   run: make save-transformed
 
     - name: Build datasets from the transformed files
       run: make dataset -j 2
@@ -195,45 +195,45 @@ jobs:
         COLLECTION_DATASET_BUCKET_NAME: ${{secrets.DEVELOPMENT_DATA_S3_BUCKET}}
       run: make save-expectations
 
-    - name: Configure Staging AWS Credentials
-      if: always()
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{secrets.STAGING_AWS_ACCESS_KEY_ID}}
-        aws-secret-access-key: ${{secrets.STAGING_AWS_ACCESS_SECRET}}
-        aws-region: eu-west-2
+    # - name: Configure Staging AWS Credentials
+    #   if: always()
+    #   uses: aws-actions/configure-aws-credentials@v1
+    #   with:
+    #     aws-access-key-id: ${{secrets.STAGING_AWS_ACCESS_KEY_ID}}
+    #     aws-secret-access-key: ${{secrets.STAGING_AWS_ACCESS_SECRET}}
+    #     aws-region: eu-west-2
     
-    - name: Save datasets to Staging S3
-      env:
-        COLLECTION_DATASET_BUCKET_NAME: ${{secrets.STAGING_DATA_S3_BUCKET}}
-        HOISTED_COLLECTION_DATASET_BUCKET_NAME: ${{secrets.STAGING_DATA_S3_BUCKET}}
-      run: make save-dataset
+    # - name: Save datasets to Staging S3
+    #   env:
+    #     COLLECTION_DATASET_BUCKET_NAME: ${{secrets.STAGING_DATA_S3_BUCKET}}
+    #     HOISTED_COLLECTION_DATASET_BUCKET_NAME: ${{secrets.STAGING_DATA_S3_BUCKET}}
+    #   run: make save-dataset
 
-    - name: Save expectations to Staging S3
-      if: always()
-      env:
-        COLLECTION_DATASET_BUCKET_NAME: ${{secrets.STAGING_DATA_S3_BUCKET}}
-      run: make save-expectations
+    # - name: Save expectations to Staging S3
+    #   if: always()
+    #   env:
+    #     COLLECTION_DATASET_BUCKET_NAME: ${{secrets.STAGING_DATA_S3_BUCKET}}
+    #   run: make save-expectations
     
-    - name: Configure Production AWS Credentials
-      if: always()
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{secrets.PROD_AWS_ACCESS_KEY_ID}}
-        aws-secret-access-key: ${{secrets.PROD_AWS_ACCESS_SECRET}}
-        aws-region: eu-west-2
+    # - name: Configure Production AWS Credentials
+    #   if: always()
+    #   uses: aws-actions/configure-aws-credentials@v1
+    #   with:
+    #     aws-access-key-id: ${{secrets.PROD_AWS_ACCESS_KEY_ID}}
+    #     aws-secret-access-key: ${{secrets.PROD_AWS_ACCESS_SECRET}}
+    #     aws-region: eu-west-2
     
-    - name: Save datasets to Prod S3
-      env:
-        COLLECTION_DATASET_BUCKET_NAME: ${{secrets.PRODUCTION_DATA_S3_BUCKET}}
-        HOISTED_COLLECTION_DATASET_BUCKET_NAME: ${{secrets.PRODUCTION_DATA_S3_BUCKET}}
-      run: make save-dataset
+    # - name: Save datasets to Prod S3
+    #   env:
+    #     COLLECTION_DATASET_BUCKET_NAME: ${{secrets.PRODUCTION_DATA_S3_BUCKET}}
+    #     HOISTED_COLLECTION_DATASET_BUCKET_NAME: ${{secrets.PRODUCTION_DATA_S3_BUCKET}}
+    #   run: make save-dataset
     
-    - name: Save expectations to Prod S3
-      if: always()
-      env:
-        COLLECTION_DATASET_BUCKET_NAME: ${{secrets.PRODUCTION_DATA_S3_BUCKET}}
-      run: make save-expectations
+    # - name: Save expectations to Prod S3
+    #   if: always()
+    #   env:
+    #     COLLECTION_DATASET_BUCKET_NAME: ${{secrets.PRODUCTION_DATA_S3_BUCKET}}
+    #   run: make save-expectations
 
   check-pipeline-errors:
     runs-on: ubuntu-latest
@@ -272,4 +272,3 @@ jobs:
                 }
               ]
             }
-
