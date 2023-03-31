@@ -173,7 +173,7 @@ jobs:
       run: make save-transformed
 
     - name: Build datasets from the transformed files
-      run: make dataset
+      run: make dataset -j 2
 
     - name: Configure Development AWS Credentials
       if: always()
