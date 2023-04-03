@@ -135,9 +135,7 @@ jobs:
     #   run: make save-collection
 
     - name: transform collected files
-      run: 
-        make transformed -j 2
-        df -h
+      run: make transformed -j 2
     
     - name: Configure Development AWS Credentials
       uses: aws-actions/configure-aws-credentials@v1
@@ -176,7 +174,10 @@ jobs:
     #   run: make save-transformed
 
     - name: Build datasets from the transformed files
-      run: make dataset -j 2
+      run: 
+        df -h
+        free -m
+        make dataset -j 2
 
     - name: Configure Development AWS Credentials
       if: always()
