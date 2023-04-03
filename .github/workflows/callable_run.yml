@@ -21,11 +21,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     
-    - name: Print number of CPU cores
-      run: echo "Number of CPU cores:$(sysctl -n hw.ncpu)"
-      
     - name: Free up disk space
       run: |
+        nproc
         df -h
         sudo rm -rf /usr/share/dotnet
         sudo rm -rf /usr/local/lib/android
