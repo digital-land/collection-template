@@ -147,7 +147,10 @@ jobs:
     - name: Save transformed files to Development S3
       env:
         COLLECTION_DATASET_BUCKET_NAME: ${{secrets.DEVELOPMENT_DATA_S3_BUCKET}}
-      run: make save-transformed
+      run: | 
+        make save-transformed
+        df - h
+        free -m
 
     # - name: Configure Staging AWS Credentials
     #   uses: aws-actions/configure-aws-credentials@v1
@@ -174,10 +177,7 @@ jobs:
     #   run: make save-transformed
 
     - name: Build datasets from the transformed files
-      run: |
-        df -h
-        free -m
-        make dataset -j 2
+      run: make dataset -j 2
 
     - name: Configure Development AWS Credentials
       if: always()
