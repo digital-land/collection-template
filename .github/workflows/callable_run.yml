@@ -174,7 +174,7 @@ jobs:
     #   run: make save-transformed
 
     - name: Build datasets from the transformed files
-      run: 
+      run: |
         df -h
         free -m
         make dataset -j 2
