@@ -149,7 +149,7 @@ jobs:
         COLLECTION_DATASET_BUCKET_NAME: ${{secrets.DEVELOPMENT_DATA_S3_BUCKET}}
       run: | 
         make save-transformed
-        df - h
+        df -h
         free -m
 
     # - name: Configure Staging AWS Credentials
