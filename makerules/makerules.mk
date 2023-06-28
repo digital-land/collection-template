@@ -106,8 +106,8 @@ specification::
 	curl -qfsL '$(SOURCE_URL)/specification/main/specification/theme.csv' > specification/theme.csv
 	curl -qfsL '$(SOURCE_URL)/specification/main/specification/collection.csv' > specification/collection.csv
 	curl -qfsL '$(SOURCE_URL)/specification/main/specification/dataset.csv' > specification/dataset.csv
-	curl -qfsL '$(SOURCE_URL)/specification/main/specification/dataset-field.csv' > specification/dataset-field.csv
-	curl -qfsL '$(SOURCE_URL)/specification/main/specification/field.csv' > specification/field.csv
+	curl -qfsL '$(SOURCE_URL)/specification/add-column-errorMessage-to-log/specification/dataset-field.csv' > specification/dataset-field.csv
+	curl -qfsL '$(SOURCE_URL)/specification/add-column-errorMessage-to-log/specification/field.csv' > specification/field.csv
 	curl -qfsL '$(SOURCE_URL)/specification/main/specification/datatype.csv' > specification/datatype.csv
 	curl -qfsL '$(SOURCE_URL)/specification/main/specification/prefix.csv' > specification/prefix.csv
 	# deprecated ..
