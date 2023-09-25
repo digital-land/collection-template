@@ -59,7 +59,7 @@ jobs:
       run: make commit-collection
 
     - name: Configure Development AWS Credentials
-      uses: aws-actions/configure-aws-credentials@v1
+      uses: aws-actions/configure-aws-credentials@v1-node16
       with:
         aws-access-key-id: ${{secrets.DEVELOPMENT_AWS_ACCESS_KEY_ID}}
         aws-secret-access-key: ${{secrets.DEVELOPMENT_AWS_ACCESS_SECRET}}
@@ -71,7 +71,7 @@ jobs:
       run: make save-resources
 
     - name: Configure Staging AWS Credentials
-      uses: aws-actions/configure-aws-credentials@v1
+      uses: aws-actions/configure-aws-credentials@v1-node16
       with:
         aws-access-key-id: ${{secrets.STAGING_AWS_ACCESS_KEY_ID}}
         aws-secret-access-key: ${{secrets.STAGING_AWS_ACCESS_SECRET}}
@@ -83,7 +83,7 @@ jobs:
       run: make save-resources
 
     - name: Configure Production AWS Credentials
-      uses: aws-actions/configure-aws-credentials@v1
+      uses: aws-actions/configure-aws-credentials@v1-node16
       with:
         aws-access-key-id: ${{secrets.PROD_AWS_ACCESS_KEY_ID}}
         aws-secret-access-key: ${{secrets.PROD_AWS_ACCESS_SECRET}}
@@ -98,7 +98,7 @@ jobs:
       run: make collection
 
     - name: Configure Development AWS Credentials
-      uses: aws-actions/configure-aws-credentials@v1
+      uses: aws-actions/configure-aws-credentials@v1-node16
       with:
         aws-access-key-id: ${{secrets.DEVELOPMENT_AWS_ACCESS_KEY_ID}}
         aws-secret-access-key: ${{secrets.DEVELOPMENT_AWS_ACCESS_SECRET}}
@@ -110,7 +110,7 @@ jobs:
       run: make save-collection
 
     - name: Configure Staging AWS Credentials
-      uses: aws-actions/configure-aws-credentials@v1
+      uses: aws-actions/configure-aws-credentials@v1-node16
       with:
         aws-access-key-id: ${{secrets.STAGING_AWS_ACCESS_KEY_ID}}
         aws-secret-access-key: ${{secrets.STAGING_AWS_ACCESS_SECRET}}
@@ -122,7 +122,7 @@ jobs:
       run: make save-collection
 
     - name: Configure Production AWS Credentials
-      uses: aws-actions/configure-aws-credentials@v1
+      uses: aws-actions/configure-aws-credentials@v1-node16
       with:
         aws-access-key-id: ${{secrets.PROD_AWS_ACCESS_KEY_ID}}
         aws-secret-access-key: ${{secrets.PROD_AWS_ACCESS_SECRET}}
@@ -137,7 +137,7 @@ jobs:
       run: make transformed -j 2
     
     - name: Configure Development AWS Credentials
-      uses: aws-actions/configure-aws-credentials@v1
+      uses: aws-actions/configure-aws-credentials@v1-node16
       with:
         aws-access-key-id: ${{secrets.DEVELOPMENT_AWS_ACCESS_KEY_ID}}
         aws-secret-access-key: ${{secrets.DEVELOPMENT_AWS_ACCESS_SECRET}}
@@ -149,7 +149,7 @@ jobs:
       run: make save-transformed
 
     - name: Configure Staging AWS Credentials
-      uses: aws-actions/configure-aws-credentials@v1
+      uses: aws-actions/configure-aws-credentials@v1-node16
       with:
         aws-access-key-id: ${{secrets.STAGING_AWS_ACCESS_KEY_ID}}
         aws-secret-access-key: ${{secrets.STAGING_AWS_ACCESS_SECRET}}
@@ -161,7 +161,7 @@ jobs:
       run: make save-transformed
 
     - name: Configure Production AWS Credentials
-      uses: aws-actions/configure-aws-credentials@v1
+      uses: aws-actions/configure-aws-credentials@v1-node16
       with:
         aws-access-key-id: ${{secrets.PROD_AWS_ACCESS_KEY_ID}}
         aws-secret-access-key: ${{secrets.PROD_AWS_ACCESS_SECRET}}
@@ -177,7 +177,7 @@ jobs:
 
     - name: Configure Development AWS Credentials
       if: always()
-      uses: aws-actions/configure-aws-credentials@v1
+      uses: aws-actions/configure-aws-credentials@v1-node16
       with:
         aws-access-key-id: ${{secrets.DEVELOPMENT_AWS_ACCESS_KEY_ID}}
         aws-secret-access-key: ${{secrets.DEVELOPMENT_AWS_ACCESS_SECRET}}
@@ -197,7 +197,7 @@ jobs:
 
     - name: Configure Staging AWS Credentials
       if: always()
-      uses: aws-actions/configure-aws-credentials@v1
+      uses: aws-actions/configure-aws-credentials@v1-node16
       with:
         aws-access-key-id: ${{secrets.STAGING_AWS_ACCESS_KEY_ID}}
         aws-secret-access-key: ${{secrets.STAGING_AWS_ACCESS_SECRET}}
@@ -217,7 +217,7 @@ jobs:
     
     - name: Configure Production AWS Credentials
       if: always()
-      uses: aws-actions/configure-aws-credentials@v1
+      uses: aws-actions/configure-aws-credentials@v1-node16
       with:
         aws-access-key-id: ${{secrets.PROD_AWS_ACCESS_KEY_ID}}
         aws-secret-access-key: ${{secrets.PROD_AWS_ACCESS_SECRET}}
