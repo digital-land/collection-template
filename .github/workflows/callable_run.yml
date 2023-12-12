@@ -31,6 +31,8 @@ jobs:
         df -h
 
     - uses: actions/checkout@v3
+      with:
+        lfs: true
 
     - uses: actions/setup-python@v4
       with:
