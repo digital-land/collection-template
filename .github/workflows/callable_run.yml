@@ -96,6 +96,11 @@ jobs:
         COLLECTION_DATASET_BUCKET_NAME: ${{secrets.PRODUCTION_DATA_S3_BUCKET}}
       run: make save-resources
 
+    - name: Save logs to Prod S3
+      env:
+        COLLECTION_DATASET_BUCKET_NAME: ${{secrets.PRODUCTION_DATA_S3_BUCKET}}
+      run: make save-logs
+
     - name: Build the collection database
       run: make collection
 
