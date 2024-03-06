@@ -59,6 +59,9 @@ jobs:
     - name: Save collected resources to S3
       run: make save-resources
 
+    - name: Get collection log and resource from S3
+      run: make load-collection
+
     - name: Build the collection database
       run: make collection
 
