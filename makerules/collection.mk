@@ -30,6 +30,10 @@ COLLECTION_INDEX=\
 	$(COLLECTION_DIR)/log.csv\
 	$(COLLECTION_DIR)/resource.csv
 
+init::
+	curl -qfsL '$(DATASTORE_URL)$(REPOSITORY)/$(COLLECTION_DIR)log.csv' > $(COLLECTION_DIR)log.csv
+	curl -qfsL '$(DATASTORE_URL)$(REPOSITORY)/$(COLLECTION_DIR)resource.csv' > $(COLLECTION_DIR)resource.csv
+
 first-pass:: collect
 
 second-pass:: collection
@@ -51,15 +55,14 @@ commit-collection::
 	git add collection
 	git diff --quiet && git diff --staged --quiet || (git commit -m "Collection $(shell date +%F)"; git push origin $(BRANCH))
 
+save-collection::
+	aws s3 sync $(COLLECTION_DIR)/log s3://$(COLLECTION_DATASET_BUCKET_NAME)/$(REPOSITORY)/$(COLLECTION_DIR)/log --no-progress
+
 load-resources::
 	aws s3 sync s3://$(COLLECTION_DATASET_BUCKET_NAME)/$(REPOSITORY)/$(RESOURCE_DIR) $(RESOURCE_DIR) --no-progress
 
 save-resources::
 	aws s3 sync $(RESOURCE_DIR) s3://$(COLLECTION_DATASET_BUCKET_NAME)/$(REPOSITORY)/$(RESOURCE_DIR) --no-progress
-
-load-collection::
-	aws s3 cp s3://$(COLLECTION_DATASET_BUCKET_NAME)/$(REPOSITORY)/$(COLLECTION_DIR) $(COLLECTION_DIR)log.csv --no-progress
-	aws s3 cp s3://$(COLLECTION_DATASET_BUCKET_NAME)/$(REPOSITORY)/$(COLLECTION_DIR) $(COLLECTION_DIR)resource.csv --no-progress
 
 save-collection::
 	aws s3 cp $(COLLECTION_DIR)log.csv s3://$(COLLECTION_DATASET_BUCKET_NAME)/$(REPOSITORY)/$(COLLECTION_DIR) --no-progress
