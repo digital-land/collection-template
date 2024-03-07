@@ -57,9 +57,6 @@ jobs:
     - name: Run the collector
       run: make collect
 
-    - name: Commit collection logs
-      run: make commit-collection
-
     - name: Configure Development AWS Credentials
       uses: aws-actions/configure-aws-credentials@v1-node16
       with:
