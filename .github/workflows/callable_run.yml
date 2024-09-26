@@ -199,6 +199,12 @@ jobs:
         COLLECTION_DATASET_BUCKET_NAME: ${{secrets.DEVELOPMENT_DATA_S3_BUCKET}}
       run: make save-expectations
 
+    - name: Save performance to Development S3
+      if: always()
+      env:
+        COLLECTION_DATASET_BUCKET_NAME: ${{secrets.DEVELOPMENT_DATA_S3_BUCKET}}
+      run: make save-performance
+
     - name: Configure Staging AWS Credentials
       if: always()
       uses: aws-actions/configure-aws-credentials@v1-node16
@@ -218,6 +224,12 @@ jobs:
       env:
         COLLECTION_DATASET_BUCKET_NAME: ${{secrets.STAGING_DATA_S3_BUCKET}}
       run: make save-expectations
+
+    - name: Save performance to Staging S3
+      if: always()
+      env:
+        COLLECTION_DATASET_BUCKET_NAME: ${{secrets.STAGING_DATA_S3_BUCKET}}
+      run: make save-performance
     
     - name: Configure Production AWS Credentials
       if: always()
@@ -238,6 +250,12 @@ jobs:
       env:
         COLLECTION_DATASET_BUCKET_NAME: ${{secrets.PRODUCTION_DATA_S3_BUCKET}}
       run: make save-expectations
+
+    - name: Save performance to Prod S3
+      if: always()
+      env:
+        COLLECTION_DATASET_BUCKET_NAME: ${{secrets.PRODUCTION_DATA_S3_BUCKET}}
+      run: make save-performance
 
   check-pipeline-errors:
     runs-on: ubuntu-latest
