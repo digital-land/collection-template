@@ -30,11 +30,11 @@ jobs:
         echo
         df -h
 
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v6
       with:
         lfs: true
 
-    - uses: actions/setup-python@v4
+    - uses: actions/setup-python@v6
       with:
         python-version: 3.8
 
@@ -58,7 +58,7 @@ jobs:
       run: make collect
 
 #    - name: Configure Development AWS Credentials
-#      uses: aws-actions/configure-aws-credentials@v1-node16
+#      uses: aws-actions/configure-aws-credentials@v6
 #      with:
 #        aws-access-key-id: ${{secrets.DEVELOPMENT_AWS_ACCESS_KEY_ID}}
 #        aws-secret-access-key: ${{secrets.DEVELOPMENT_AWS_ACCESS_SECRET}}
@@ -70,7 +70,7 @@ jobs:
 #      run: make save-resources
 
 #    - name: Configure Staging AWS Credentials
-#      uses: aws-actions/configure-aws-credentials@v1-node16
+#      uses: aws-actions/configure-aws-credentials@v6
 #      with:
 #        aws-access-key-id: ${{secrets.STAGING_AWS_ACCESS_KEY_ID}}
 #        aws-secret-access-key: ${{secrets.STAGING_AWS_ACCESS_SECRET}}
@@ -82,7 +82,7 @@ jobs:
 #      run: make save-resources
 
     - name: Configure Production AWS Credentials
-      uses: aws-actions/configure-aws-credentials@v1-node16
+      uses: aws-actions/configure-aws-credentials@v6
       with:
         aws-access-key-id: ${{secrets.PROD_AWS_ACCESS_KEY_ID}}
         aws-secret-access-key: ${{secrets.PROD_AWS_ACCESS_SECRET}}
@@ -102,7 +102,7 @@ jobs:
       run: make collection
 
 #    - name: Configure Development AWS Credentials
-#      uses: aws-actions/configure-aws-credentials@v1-node16
+#      uses: aws-actions/configure-aws-credentials@v6
 #      with:
 #        aws-access-key-id: ${{secrets.DEVELOPMENT_AWS_ACCESS_KEY_ID}}
 #        aws-secret-access-key: ${{secrets.DEVELOPMENT_AWS_ACCESS_SECRET}}
@@ -114,7 +114,7 @@ jobs:
 #      run: make save-collection
 #
 #    - name: Configure Staging AWS Credentials
-#      uses: aws-actions/configure-aws-credentials@v1-node16
+#      uses: aws-actions/configure-aws-credentials@v6
 #      with:
 #        aws-access-key-id: ${{secrets.STAGING_AWS_ACCESS_KEY_ID}}
 #        aws-secret-access-key: ${{secrets.STAGING_AWS_ACCESS_SECRET}}
@@ -126,7 +126,7 @@ jobs:
 #      run: make save-collection
 
     - name: Configure Production AWS Credentials
-      uses: aws-actions/configure-aws-credentials@v1-node16
+      uses: aws-actions/configure-aws-credentials@v6
       with:
         aws-access-key-id: ${{secrets.PROD_AWS_ACCESS_KEY_ID}}
         aws-secret-access-key: ${{secrets.PROD_AWS_ACCESS_SECRET}}
@@ -141,7 +141,7 @@ jobs:
       run: make transformed -j 2
     
 #    - name: Configure Development AWS Credentials
-#      uses: aws-actions/configure-aws-credentials@v1-node16
+#      uses: aws-actions/configure-aws-credentials@v6
 #      with:
 #        aws-access-key-id: ${{secrets.DEVELOPMENT_AWS_ACCESS_KEY_ID}}
 #        aws-secret-access-key: ${{secrets.DEVELOPMENT_AWS_ACCESS_SECRET}}
@@ -153,7 +153,7 @@ jobs:
 #      run: make save-transformed
 #
 #    - name: Configure Staging AWS Credentials
-#      uses: aws-actions/configure-aws-credentials@v1-node16
+#      uses: aws-actions/configure-aws-credentials@v6
 #      with:
 #        aws-access-key-id: ${{secrets.STAGING_AWS_ACCESS_KEY_ID}}
 #        aws-secret-access-key: ${{secrets.STAGING_AWS_ACCESS_SECRET}}
@@ -165,7 +165,7 @@ jobs:
 #      run: make save-transformed
 
     - name: Configure Production AWS Credentials
-      uses: aws-actions/configure-aws-credentials@v1-node16
+      uses: aws-actions/configure-aws-credentials@v6
       with:
         aws-access-key-id: ${{secrets.PROD_AWS_ACCESS_KEY_ID}}
         aws-secret-access-key: ${{secrets.PROD_AWS_ACCESS_SECRET}}
@@ -181,7 +181,7 @@ jobs:
 
 #    - name: Configure Development AWS Credentials
 #      if: always()
-#      uses: aws-actions/configure-aws-credentials@v1-node16
+#      uses: aws-actions/configure-aws-credentials@v6
 #      with:
 #        aws-access-key-id: ${{secrets.DEVELOPMENT_AWS_ACCESS_KEY_ID}}
 #        aws-secret-access-key: ${{secrets.DEVELOPMENT_AWS_ACCESS_SECRET}}
@@ -207,7 +207,7 @@ jobs:
 #
 #    - name: Configure Staging AWS Credentials
 #      if: always()
-#      uses: aws-actions/configure-aws-credentials@v1-node16
+#      uses: aws-actions/configure-aws-credentials@v6
 #      with:
 #        aws-access-key-id: ${{secrets.STAGING_AWS_ACCESS_KEY_ID}}
 #        aws-secret-access-key: ${{secrets.STAGING_AWS_ACCESS_SECRET}}
@@ -233,7 +233,7 @@ jobs:
     
     - name: Configure Production AWS Credentials
       if: always()
-      uses: aws-actions/configure-aws-credentials@v1-node16
+      uses: aws-actions/configure-aws-credentials@v6
       with:
         aws-access-key-id: ${{secrets.PROD_AWS_ACCESS_KEY_ID}}
         aws-secret-access-key: ${{secrets.PROD_AWS_ACCESS_SECRET}}
@@ -264,34 +264,24 @@ jobs:
     if: always() && contains(join(needs.*.result, ','), 'failure')
     steps:
       - name: send failure notification
-        uses: slackapi/slack-github-action@v1
-        env:
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+        uses: slackapi/slack-github-action@v3.0.3
         with:
-          channel-id: 'planning-data-alerts'
+          method: chat.postMessage
+          token: ${{ secrets.SLACK_BOT_TOKEN }}
+          payload-templated: true
           payload: |
-            {
-              "text": "Collection Run: ${{ github.repository }}",
-              "icon_emoji": ":warning:",
-              "username": "CollectionRunner",
-              "blocks": [
-                {
-                  "type": "header",
-                  "text": {
-                    "type": "plain_text",
-                    "text": "Collection Run Failed: ${{ github.repository }} "
-                  }
-                },
-                {
-                  "type": "divider"
-                },
-                {
-                  "type": "section",
-                  "text": {
-                    "type": "mrkdwn",
-                    "text": "The report for this run is available on <https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}|GitHub>"
-                  }
-                }
-              ]
-            }
+            channel: planning-data-alerts
+            text: "Collection Run: ${{ github.repository }}"
+            icon_emoji: ":warning:"
+            username: CollectionRunner
+            blocks:
+              - type: header
+                text:
+                  type: plain_text
+                  text: "Collection Run Failed: ${{ github.repository }} "
+              - type: divider
+              - type: section
+                text:
+                  type: mrkdwn
+                  text: "The report for this run is available on <https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}|GitHub>"
 
